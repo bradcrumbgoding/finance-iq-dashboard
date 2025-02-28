@@ -16,34 +16,53 @@ const Dashboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
   
   // Show different panels based on the user role
-  const renderRoleBasedContent = () => {
-    switch (userRole) {
-      case 'cfo':
-        return (
+const renderRoleBasedContent = () => {
+  // For the CFO role, show more strategic components
+  if (userRole === 'cfo') {
+    if (activeTab === 'overview') {
+      return (
+        <>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
             <ActionableInsights />
             <ConversationalAssistant />
           </div>
-        );
-        
-      case 'controller':
-        return (
+          <PredictiveCashFlow />
+        </>
+      );
+    } else if (activeTab === 'vendors') {
+      return <VendorRiskMatrix />;
+    } else if (activeTab === 'approvers') {
+      return <ProcessOptimization />;
+    }
+  }
+  
+  // For the Controller role, show operational components
+  else if (userRole === 'controller') {
+    if (activeTab === 'overview') {
+      return (
+        <>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
             <VendorPerformance />
             <ApproverPerformance />
           </div>
-        );
-        
-      case 'ap-clerk':
-      default:
-        return (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-            <VendorPerformance />
-            <ConversationalAssistant />
-          </div>
-        );
+          <ProcessOptimization />
+        </>
+      );
+    } else if (activeTab === 'vendors') {
+      return <VendorRiskMatrix />;
     }
-  };
+  }
+  
+  // Default/AP Clerk view remains mostly the same
+  else {
+    return (
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <VendorPerformance />
+        <ConversationalAssistant />
+      </div>
+    );
+  }
+};
   
   return (
     <div className="flex flex-col h-full">
