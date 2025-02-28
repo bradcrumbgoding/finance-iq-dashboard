@@ -1,6 +1,6 @@
 // New component: PredictiveCashFlow.js
 import React, { useState } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine, ReferenceArea } from 'recharts';
+import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine, ReferenceArea } from 'recharts';
 
 const PredictiveCashFlow = () => {
   const [forecastPeriod, setForecastPeriod] = useState('90');
