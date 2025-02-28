@@ -53,7 +53,7 @@ const Header = ({ activeTab, setActiveTab }) => {
         </div>
       </div>
       
-      // In Header.js, expand the navigation with more options
+      
 <nav className="mt-4">
   <ul className="flex space-x-6">
     <li>
