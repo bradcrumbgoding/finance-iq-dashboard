@@ -7,6 +7,9 @@ import VendorPerformance from './VendorPerformance';
 import ApproverPerformance from './ApproverPerformance';
 import ConversationalAssistant from './ConversationalAssistant';
 import ActionableInsights from './ActionableInsights';
+import PredictiveCashFlow from './PredictiveCashFlow';
+import VendorRiskMatrix from './VendorRiskMatrix';
+import ProcessOptimization from './ProcessOptimization';
 
 const Dashboard = () => {
   const { userRole } = useContext(UserContext);
