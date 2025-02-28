@@ -206,4 +206,84 @@ const ActionableInsights = () => {
                 className="text-gray-400 hover:text-gray-600"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
-                  <line x1="18" y1="
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+            
+            <div className="mb-6">
+              <p className="text-gray-600 mb-4">
+                You are taking action on: <span className="font-medium text-gray-800">{selectedInsight.title}</span>
+              </p>
+              
+              {selectedInsight.selectedAction === 'Investigate' && (
+                <div className="space-y-4">
+                  <p className="text-sm text-gray-600">AI has compared both invoices and found:</p>
+                  <ul className="list-disc pl-5 space-y-2 text-sm text-gray-600">
+                    <li>Same vendor: TechVision Inc</li>
+                    <li>Same amount: $8,750</li>
+                    <li>Same date: February 15, 2025</li>
+                    <li>Different invoice numbers: #4498 vs #4512</li>
+                    <li>Slight description variation: "IT Support Services - February" vs "IT Support - Feb 2025"</li>
+                  </ul>
+                </div>
+              )}
+              
+              {selectedInsight.selectedAction === 'Schedule Payment' && (
+                <div className="space-y-4">
+                  <p className="text-sm text-gray-600">Payment details:</p>
+                  <ul className="list-disc pl-5 space-y-2 text-sm text-gray-600">
+                    <li>Vendor: Acme Supplies</li>
+                    <li>Invoice #4523</li>
+                    <li>Amount: $21,000</li>
+                    <li>Discount: 2% ($420) if paid by Friday</li>
+                    <li>Current due date: March 15, 2025</li>
+                  </ul>
+                  <div className="flex items-center mt-4">
+                    <input type="date" className="border rounded p-2 mr-2" defaultValue="2025-03-01" />
+                    <span className="text-sm text-gray-600">Payment Date</span>
+                  </div>
+                </div>
+              )}
+              
+              {selectedInsight.selectedAction === 'Send Reminder' && (
+                <div className="space-y-4">
+                  <p className="text-sm text-gray-600">Pending approvals:</p>
+                  <ul className="list-disc pl-5 space-y-2 text-sm text-gray-600">
+                    <li>5 invoices awaiting approval</li>
+                    <li>Total value: $34,750</li>
+                    <li>Oldest waiting: 4 days</li>
+                    <li>Approver: Emma Davis (Marketing Department)</li>
+                  </ul>
+                  <textarea 
+                    className="w-full border rounded p-2 mt-2" 
+                    rows="3"
+                    defaultValue="Hello Emma, This is a friendly reminder that you have 5 invoices awaiting your approval, some for more than 3 days. Could you please review these at your earliest convenience? Thank you!"
+                  ></textarea>
+                </div>
+              )}
+            </div>
+            
+            <div className="flex justify-end space-x-3">
+              <button
+                onClick={() => setShowModal(false)}
+                className="px-4 py-2 bg-gray-100 text-gray-800 rounded hover:bg-gray-200"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={completeAction}
+                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              >
+                Complete Action
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default ActionableInsights;
