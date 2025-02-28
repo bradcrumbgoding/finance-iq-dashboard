@@ -1,6 +1,6 @@
 // New component: VendorRiskMatrix.js
 import React, { useState } from 'react';
-import { ScatterChart, Scatter, XAxis, YAxis, ZAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LabelList } from 'recharts';
+import { ScatterChart, Scatter, XAxis, YAxis, ZAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LabelList, ReferenceLine, ReferenceArea } from 'recharts';
 
 const VendorRiskMatrix = () => {
   const [riskThreshold, setRiskThreshold] = useState(50);
