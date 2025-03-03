@@ -15,9 +15,15 @@ const Header = ({ activeTab, setActiveTab }) => {
           </svg>
           <h1 className="ml-2 text-2xl font-bold text-gray-800">FinanceIQ</h1>
         </div>
-        
+          <div className="flex items-center">
+    <SmartNotificationSystem />
+    <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-medium">
+      JD
+    </div>
+  </div>
         <div className="flex items-center">
           <div className="mr-6">
+    
             <label htmlFor="roleSelector" className="block text-sm font-medium text-gray-700 mb-1">
               View as:
             </label>
