@@ -1,4 +1,4 @@
-// New component: SmartNotificationSystem.js
+// SmartNotificationSystem.js
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { UserContext } from '../context/UserContext';
 import { Bell, X, Zap, Check, Clock, Calendar, PieChart, TrendingUp, AlertTriangle } from 'lucide-react';
@@ -130,9 +130,20 @@ const SmartNotificationSystem = () => {
       notification.id === id ? {...notification, read: true} : notification
     );
     setNotifications(updatedNotifications);
-    setUnreadCount(prev => prev - 1);
+    setUnreadCount(prev => Math.max(0, prev - 1));
     
     // In production, would call API to mark as read
+  };
+  
+  // Mark all notifications as read
+  const markAllAsRead = () => {
+    const updatedNotifications = notifications.map(notification => ({
+      ...notification, read: true
+    }));
+    setNotifications(updatedNotifications);
+    setUnreadCount(0);
+    
+    // In production, would call API to mark all as read
   };
   
   // Filter notifications by category
@@ -199,16 +210,85 @@ const SmartNotificationSystem = () => {
             <div className="p-4 bg-gradient-to-r from-blue-50 to-indigo-50 border-b flex justify-between items-center">
               <h3 className="font-medium text-gray-800">Notifications</h3>
               <div className="flex space-x-2">
-                <button className="p-1 hover:bg-blue-100 rounded">
+                <button 
+                  className="p-1 hover:bg-blue-100 rounded"
+                  onClick={markAllAsRead}
+                  title="Mark all as read"
+                >
                   <Check className="h-4 w-4 text-blue-600" />
                 </button>
                 <button 
                   className="p-1 hover:bg-blue-100 rounded"
                   onClick={() => setShowPanel(false)}
+                  title="Close"
                 >
                   <X className="h-4 w-4 text-gray-600" />
                 </button>
               </div>
+            </div>
+            
+            {/* Category Filter */}
+            <div className="flex p-2 bg-gray-50 overflow-x-auto">
+              {Object.entries(categories).map(([key, label]) => (
+                <button
+                  key={key}
+                  className={`px-3 py-1 text-xs font-medium rounded-full mr-2 whitespace-nowrap ${
+                    activeCategory === key
+                      ? 'bg-blue-100 text-blue-800'
+                      : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
+                  }`}
+                  onClick={() => setActiveCategory(key)}
+                >
+                  {label} {key === 'all' && unreadCount > 0 && `(${unreadCount})`}
+                </button>
+              ))}
+            </div>
+            
+            {/* Notification List */}
+            <div className="overflow-y-auto max-h-80">
+              {filteredNotifications.length > 0 ? (
+                filteredNotifications.map(notification => (
+                  <div
+                    key={notification.id}
+                    className={`p-4 border-b hover:bg-gray-50 cursor-pointer ${
+                      !notification.read ? 'bg-blue-50' : ''
+                    }`}
+                    onClick={() => handleNotificationClick(notification.id)}
+                  >
+                    <div className="flex">
+                      <div className="flex-shrink-0 mr-3">
+                        {renderIcon(notification.type, notification.priority)}
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex justify-between">
+                          <h4 className="text-sm font-medium text-gray-900">{notification.title}</h4>
+                          <span className="text-xs text-gray-500">{formatTime(notification.time)}</span>
+                        </div>
+                        <p className="text-sm text-gray-600 mt-1">{notification.description}</p>
+                        <div className="mt-2">
+                          <button className="text-xs font-medium text-blue-600 hover:text-blue-800">
+                            {notification.action}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="p-4 text-center text-gray-500">
+                  <p>No notifications in this category</p>
+                </div>
+              )}
+            </div>
+            
+            <div className="p-3 bg-gray-50 text-center border-t">
+              <button className="text-xs text-blue-600 hover:text-blue-800 font-medium">
+                View All Notifications
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
       
       {/* Welcome Modal */}
       {showWelcomeModal && (
@@ -292,67 +372,3 @@ const SmartNotificationSystem = () => {
 };
 
 export default SmartNotificationSystem;
-            </div>
-            
-            {/* Category Filter */}
-            <div className="flex p-2 bg-gray-50 overflow-x-auto">
-              {Object.entries(categories).map(([key, label]) => (
-                <button
-                  key={key}
-                  className={`px-3 py-1 text-xs font-medium rounded-full mr-2 whitespace-nowrap ${
-                    activeCategory === key
-                      ? 'bg-blue-100 text-blue-800'
-                      : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
-                  }`}
-                  onClick={() => setActiveCategory(key)}
-                >
-                  {label} {key === 'all' && unreadCount > 0 && `(${unreadCount})`}
-                </button>
-              ))}
-            </div>
-            
-            {/* Notification List */}
-            <div className="overflow-y-auto max-h-80">
-              {filteredNotifications.length > 0 ? (
-                filteredNotifications.map(notification => (
-                  <div
-                    key={notification.id}
-                    className={`p-4 border-b hover:bg-gray-50 cursor-pointer ${
-                      !notification.read ? 'bg-blue-50' : ''
-                    }`}
-                    onClick={() => handleNotificationClick(notification.id)}
-                  >
-                    <div className="flex">
-                      <div className="flex-shrink-0 mr-3">
-                        {renderIcon(notification.type, notification.priority)}
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex justify-between">
-                          <h4 className="text-sm font-medium text-gray-900">{notification.title}</h4>
-                          <span className="text-xs text-gray-500">{formatTime(notification.time)}</span>
-                        </div>
-                        <p className="text-sm text-gray-600 mt-1">{notification.description}</p>
-                        <div className="mt-2">
-                          <button className="text-xs font-medium text-blue-600 hover:text-blue-800">
-                            {notification.action}
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className="p-4 text-center text-gray-500">
-                  <p>No notifications in this category</p>
-                </div>
-              )}
-            </div>
-            
-            <div className="p-3 bg-gray-50 text-center border-t">
-              <button className="text-xs text-blue-600 hover:text-blue-800 font-medium">
-                View All Notifications
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
