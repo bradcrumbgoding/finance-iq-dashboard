@@ -11,6 +11,8 @@ import PredictiveCashFlow from './PredictiveCashFlow';
 import VendorRiskMatrix from './VendorRiskMatrix';
 import ProcessOptimization from './ProcessOptimization';
 import SmartNotificationSystem from './SmartNotificationSystem';
+import DailyInsightWidget from './DailyInsightWidget';
+
 
 
 const Dashboard = () => {
