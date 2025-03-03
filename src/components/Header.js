@@ -61,6 +61,21 @@ const Header = ({ activeTab, setActiveTab }) => {
       
       
 <nav className="mt-4">
+                <nav className="mt-4">
+  <ul className="flex space-x-6">
+    {/* Existing tabs */}
+    
+    <li>
+      <button 
+        className={`pb-2 ${activeTab === 'improvement' ? 'text-blue-600 border-b-2 border-blue-600 font-medium' : 'text-gray-500 hover:text-gray-700'}`}
+        onClick={() => setActiveTab('improvement')}
+      >
+        Improvement Hub
+        <span className="ml-1 px-1.5 py-0.5 text-xs bg-green-100 text-green-800 rounded-full">New</span>
+      </button>
+    </li>
+  </ul>
+</nav>
   <ul className="flex space-x-6">
     <li>
       <button 
