@@ -10,6 +10,8 @@ import ActionableInsights from './ActionableInsights';
 import PredictiveCashFlow from './PredictiveCashFlow';
 import VendorRiskMatrix from './VendorRiskMatrix';
 import ProcessOptimization from './ProcessOptimization';
+import SmartNotificationSystem from './SmartNotificationSystem';
+
 
 const Dashboard = () => {
   const { userRole } = useContext(UserContext);
